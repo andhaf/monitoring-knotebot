@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{APP_NAME}}-test
+  labels:
+    app: {{APP_NAME}}-test
+spec:
+  selector:
+    app: {{APP_NAME}}-test
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: 80

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{APP_NAME}}
+  name: {{APP_NAME}}
+  annotations:
+    nrk/criticality: '4'
+    nrk/documentation: 'https://confluence.nrk.no/'
+    nrk/repository: 'https://github.com/nrkno/{{APP_NAME}}'
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{APP_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{APP_NAME}}
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: {{IMAGE_NAME}}
+        name: {{APP_NAME}}
+        resources:
+            requests:
+              memory: 256M
+              cpu: 0.1
+            limits:
+              memory: 2048M
+              cpu: 1
+        env:
+        - name: SOME_ENV
+          value: Some-value
+        ports:
+        - containerPort: 80
+          name: http
